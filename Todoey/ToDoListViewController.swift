@@ -11,7 +11,7 @@ import UIKit
 class ToDoListViewController: UITableViewController {
 
     //
-    let itemArray = ["Find Mike", "Buy eggs", "Destroy Demogorgon"]
+    var itemArray = ["Find Mike", "Buy eggs", "Destroy Demogorgon"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,8 +45,29 @@ class ToDoListViewController: UITableViewController {
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         }
         
-        //with this, every time that click on a row, in will be deselect
+        //with this, every time that click on a row, it will be deselect
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    //MARK - Add new Items
+    
+    @IBAction func addButtonPressed(_ sender: Any) {
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add new Todoey Item", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+            //what will happen once the user clicks the Add Item button on our UIAlert
+            self.itemArray.append(textField.text!)
+            self.tableView.reloadData()
+        }
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create new Item"
+            textField = alertTextField
+        }
+        
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
     }
     
 }
